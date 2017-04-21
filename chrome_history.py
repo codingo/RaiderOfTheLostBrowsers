@@ -3,8 +3,8 @@ import sqlite3
 import operator
 from collections import OrderedDict
 
-#website to analyse
-syte="yahoo.com"
+# website to analyse
+site="yahoo.com"
 
 
 def parse(url):
@@ -15,29 +15,28 @@ def parse(url):
         return domain
     except:
         False
-
     
-#path to user's history database (Chrome)
+# path to user's history database (Chrome)
 data_path = os.path.expanduser('~')+"\AppData\Local\Google\Chrome\User Data\Default"
 files = os.listdir(data_path)
 
 history_db = os.path.join(data_path, 'history')
 
-#querying the db
+# querying the db
 c = sqlite3.connect(history_db)
 cursor = c.cursor()
 select_statement = "SELECT urls.url, urls.visit_count FROM urls, visits WHERE urls.id = visits.url;"
 cursor.execute(select_statement)
 
-results = cursor.fetchall() #tuple
+results = cursor.fetchall()
 
-sites_count = {} #dict makes iterations easier :D
+sites_count = {}
 fl=[]
 for url, count in results:
     url = parse(url)
-    if syte in str(url):
-        #print url
+    if site in str(url):
+        # print url
         if url not in fl:
             fl.append(url)
-print "Results:"
-print fl
+print("Results:")
+print(fl)
