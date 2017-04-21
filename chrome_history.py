@@ -4,7 +4,7 @@ import operator
 from collections import OrderedDict
 
 # website to analyse
-site="yahoo.com"
+site="reddit"
 
 
 def parse(url):
@@ -25,7 +25,10 @@ history_db = os.path.join(data_path, 'history')
 # querying the db
 c = sqlite3.connect(history_db)
 cursor = c.cursor()
-select_statement = "SELECT urls.url, urls.visit_count FROM urls, visits WHERE urls.id = visits.url;"
+select_statement = """  SELECT DISTINCT urls.url, urls.visit_count 
+                        FROM            urls, visits 
+                        WHERE           urls.id = visits.url 
+                        GROUP BY        urls.url, urls.visit_count;"""
 cursor.execute(select_statement)
 
 results = cursor.fetchall()
@@ -34,6 +37,7 @@ sites_count = {}
 fl=[]
 for url, count in results:
     url = parse(url)
+    # print(url)
     if site in str(url):
         # print url
         if url not in fl:
