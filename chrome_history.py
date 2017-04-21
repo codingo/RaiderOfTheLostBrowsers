@@ -47,7 +47,7 @@ def query_database(search_term):
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument("-term", dest="term", help="Provide a term to search for in URL's. Ex: https://test.sharepoint.com")
+    parser.add_argument("-t", dest="term", help="Provide a term to search for in URL's. Ex: https://test.sharepoint.com")
     arguments = parser.parse_args()
 
     if len(sys.argv) == 1:
